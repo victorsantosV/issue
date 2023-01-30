@@ -9,7 +9,6 @@ on:
 
 jobs:
   label_issue:
-    if: github.event.label.name == 'bug'
     runs-on: ubuntu-latest
     steps:
       - env:
