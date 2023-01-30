@@ -6,6 +6,7 @@ on:
       - closed
     branches:
       - main
+
 jobs:
   label_issue:
     if: github.event.label.name == 'bug'
