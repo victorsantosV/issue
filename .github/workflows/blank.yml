@@ -16,7 +16,8 @@ jobs:
           ISSUE_URL: ${{ github.event.issue.html_url }}
           ISSUE_NUMBER: ${{ github.event.issue.number }}
         run: |
-            echo ISSUE_DATA=$(curl -H "Authorization: token $GITHUB_TOKEN" https://api.github.com/repos/issue/issues/$ISSUE_NUMBER)
+            echo ISSUE_DATA=$(curl -H "Authorization: token $GITHUB_TOKEN" "https://api.github.com/repos/issue/issues/$ISSUE_NUMBER")
+
             # Filter to retrieve last message
             echo LAST_MESSAGE=$(echo $ISSUE_DATA | jq '.comments[-1].body')
             echo SENDER=$(echo $ISSUE_DATA | jq '.comments[-1].user.login')
