@@ -14,12 +14,16 @@ jobs:
       - env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           ISSUE_URL: ${{ github.event.issue.html_url }}
+          
         run: |
-          if ${{ github.event.issue.body }} == yes; then
+            echo ISSUE_DATA=$(curl -H "Authorization: token $GITHUB_TOKEN" $ISSUE_URL)
+            # Filter to retrieve last message
+            LAST_MESSAGE=$(echo $ISSUE_DATA | jq '.comments[-1].body')
+            SENDER=$(echo $ISSUE_DATA | jq '.comments[-1].user.login')
+
+            # Store in environment variables
+            echo "::set-env name=LAST_MESSAGE::$LAST_MESSAGE"
+            echo "::set-env name=SENDER::$SENDER"
+            
             echo ${{ github.event.issue.body }}
             echo ${{ toJSON(github.event.issue) }}
-          else
-            echo ${{ toJSON(github.event.issue) }}
-            echo "erro"
-            echo ${{ github.event.issue.body }}
-          fi
