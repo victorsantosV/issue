@@ -21,4 +21,4 @@ jobs:
           token: ${{ github.token }}
           title: Simple test issue
           body: ${{ github.sha }}
-          assignees: ARCamacho
+          assignees: victorsantosV
