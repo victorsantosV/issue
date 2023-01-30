@@ -17,9 +17,9 @@ jobs:
         run: |
           if ${{ github.event.issue.body }} == yes; then
             echo ${{ github.event.issue.body }}
-            echo ${{ toJSON(github.event.issue.assignees) }}
+            echo ${{ toJSON(github.event.issue) }}
           else
-            echo ${{ toJSON(github.event.issue.assignees) }}
+            echo ${{ toJSON(github.event.issue) }}
             echo "erro"
             echo ${{ github.event.issue.body }}
           fi
