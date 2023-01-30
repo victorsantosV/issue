@@ -1,0 +1,20 @@
+name: Issue Closed Pipeline
+
+on:
+  issues:
+    types:
+      - closed
+  pull_request:
+    types:
+      - closed
+
+jobs:
+  label_issue:
+    if: github.event.label.name == 'bug'
+    runs-on: ubuntu-latest
+    steps:
+      - env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          ISSUE_URL: ${{ github.event.issue.html_url }}
+        run: |
+          echo ${{ github.event.issue.body }}
