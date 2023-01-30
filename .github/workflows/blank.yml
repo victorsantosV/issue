@@ -22,8 +22,8 @@ jobs:
             SENDER=$(echo $ISSUE_DATA | jq '.comments[-1].user.login')
 
             # Store in environment variables
-            echo ${{ LAST_MESSAGE }}
-            echo ${{ SENDER }}
+            echo $LAST_MESSAGE
+            echo $SENDER
             
             echo ${{ github.event.issue.body }}
 
