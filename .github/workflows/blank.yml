@@ -15,4 +15,8 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           ISSUE_URL: ${{ github.event.issue.html_url }}
         run: |
-          echo ${{ github.event.issue.body }}
+          if ${{ github.event.issue.assignees == ARCamacho && github.event.issue.body == yes }}; then
+            echo ${{ github.event.issue.body }}
+          else
+            echo ${{ github.event.issue.body }}
+          fi
