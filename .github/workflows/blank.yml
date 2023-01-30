@@ -15,7 +15,7 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           ISSUE_URL: ${{ github.event.issue.html_url }}
         run: |
-          if ${{ github.event.issue.assignees}} == ARCamacho && ${{ github.event.issue.body }} == yes; then
+          if contains(fromJSON('["ARCamacho", "victorsantosV"]'), github.event.issue.assignees) && ${{ github.event.issue.body }} == yes; then
             echo ${{ github.event.issue.body }}
           else
             echo "erro"
