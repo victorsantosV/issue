@@ -19,8 +19,8 @@ jobs:
             echo ISSUE_DATA=$(curl -H "Authorization: token ${{ env.GITHUB_TOKEN }}" "https://api.github.com/repos/issue/issues/${{ env.ISSUE_NUMBER }}")
 
             # Filter to retrieve last message
-            echo LAST_MESSAGE=$(echo $ISSUE_DATA | jq '.comments[-1].body')
-            echo SENDER=$(echo $ISSUE_DATA | jq '.comments[-1].user.login')
+            echo LAST_MESSAGE=$(echo ${{ ISSUE_DATA }} | jq '.comments[-1].body')
+            echo SENDER=$(echo ${{ ISSUE_DATA }} | jq '.comments[-1].user.login')
 
             # Store in environment variables
             echo $LAST_MESSAGE
