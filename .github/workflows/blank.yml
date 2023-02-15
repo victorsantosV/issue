@@ -15,12 +15,12 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           ISSUE_URL: ${{ github.event.issue.html_url }}
           ISSUE_NUMBER: ${{ github.event.issue.number }}
-        run: |
-            echo ISSUE_DATA=$(curl -H "Authorization: token ${{ env.GITHUB_TOKEN }}" "https://api.github.com/repos/issue/issues/${{ env.ISSUE_NUMBER }}")
+        run: |-
+            ISSUE_DATA=$(curl -H "Authorization: token ${{ env.GITHUB_TOKEN }}" "https://api.github.com/repos/issue/issues/${{ env.ISSUE_NUMBER }}")
 
             # Filter to retrieve last message
-            echo LAST_MESSAGE=$(echo $ISSUE_DATA | jq '.comments[-1].body')
-            echo SENDER=$(echo $ISSUE_DATA | jq '.comments[-1].user.login')
+            LAST_MESSAGE=$(echo $ISSUE_DATA | jq '.comments[-1].body')
+            SENDER=$(echo $ISSUE_DATA | jq '.comments[-1].user.login')
 
             # Store in environment variables
             echo $LAST_MESSAGE
