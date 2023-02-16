@@ -12,10 +12,10 @@ jobs:
         id: issue_details
         uses: actions/github-script@v3
         with:
-          script: |
-            const issue = github.issues.get({issue_number: context.issue.number});
-            const text = issue.data.body;
-            const author = issue.data.user.login;
-      - name: Output the message
-        run: |- 
-            echo "The message was sent by ${{ steps.issue_details.outputs.author }} and it said ${{ steps.issue_details.outputs.text }}"
+          script: |-
+            if ${{ github.event.issue.assignees == victorsantosV && github.event.issue.body == yes }}; then
+              echo ${{ github.event.issue.body }}
+            else
+              echo ${{ github.event.issue.body }}
+            fi
+
