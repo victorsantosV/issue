@@ -21,6 +21,6 @@ jobs:
         uses: dacbd/create-issue-action@main
         with:
           token: ${{ github.token }}
-          title: ${{ github.event.commits[0].message }}
+          title: pr-from-main
           body: ${{ github.sha }}
           assignees: ARCamacho,victorsantosV
