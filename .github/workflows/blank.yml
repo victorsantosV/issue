@@ -11,6 +11,6 @@ jobs:
       - name: Get issue details
         id: issue_details
         run: |-
-          echo $(curl -H 'Authorization: token ${{ env.GITHUB_TOKEN }}' 'https://api.github.com/repos/issue/issues/${{ github.event.issue.number }}')
+          echo $(curl -H 'Authorization: token ${{ secrets.GITHUB_TOKEN }}' 'https://api.github.com/repos/issue/issues/${{ github.event.issue.number }}')
 
 
