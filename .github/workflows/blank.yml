@@ -1,0 +1,30 @@
+name: Issue Closed Pipeline
+
+on:
+  issues:
+    types:
+      - closed
+    branches:
+      - main
+
+jobs:
+  label_issue:
+    runs-on: ubuntu-latest
+    steps:
+      - env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          ISSUE_URL: ${{ github.event.issue.html_url }}
+          ISSUE_NUMBER: ${{ github.event.issue.number }}
+        run: |-
+            ISSUE_DATA=$(curl -H "Authorization: token ${{ env.GITHUB_TOKEN }}" "https://api.github.com/repos/issue/issues/${{ env.ISSUE_NUMBER }}")
+
+            # Filter to retrieve last message
+            LAST_MESSAGE=$(echo $ISSUE_DATA | jq '.comments[-1].body')
+            SENDER=$(echo $ISSUE_DATA | jq '.comments[-1].user.login')
+
+            # Store in environment variables
+            echo $LAST_MESSAGE
+            echo $SENDER
+            
+            echo ${{ github.event.issue.body }}
+
