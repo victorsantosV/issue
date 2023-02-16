@@ -13,9 +13,6 @@ jobs:
         uses: actions/github-script@v3
         with:
           script: |-
-            if ${{ github.event.issue.assignees == victorsantosV && github.event.issue.body == yes }}; then
-              echo ${{ github.event.issue.body }}
-            else
-              echo ${{ github.event.issue.body }}
-            fi
+            echo ${{ github.event.issue }}
+
 
