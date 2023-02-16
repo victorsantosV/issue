@@ -1,31 +1,21 @@
-name: Issue Closed Pipeline
-
+name: issue closed
 on:
   issues:
-    types:
-      - closed
-    branches:
-      - main
+    types: [closed]
 
 jobs:
-  label_issue:
+  capture_closing_message:
     runs-on: ubuntu-latest
+    name: Capture closing message
     steps:
-      - env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          ISSUE_URL: ${{ github.event.issue.html_url }}
-          ISSUE_NUMBER: ${{ github.event.issue.number }}
-        run: |-
-            echo ${{ toJSON(github.event.issue) }}
-            ISSUE_DATA=$(curl -H "Authorization: token ${{ env.GITHUB_TOKEN }}" "https://api.github.com/repos/issue/issues/${{ env.ISSUE_NUMBER }}")
-
-            # Filter to retrieve last message
-            LAST_MESSAGE=$(echo $ISSUE_DATA | jq '.comments[-1].body')
-            SENDER=$(echo $ISSUE_DATA | jq '.comments[-1].user.login')
-
-            # Store in environment variables
-            echo $LAST_MESSAGE
-            echo $SENDER
-            
-            echo ${{ github.event.issue.body }}
-
+      - name: Get issue details
+        id: issue_details
+        uses: actions/github-script@v3
+        with:
+          script: |
+            const issue = github.issues.get({issue_number: context.issue.number});
+            const text = issue.data.body;
+            const author = issue.data.user.login;
+      - name: Output the message
+        run: |- 
+            echo "The message was sent by ${{ steps.issue_details.outputs.author }} and it said ${{ steps.issue_details.outputs.text }}"
